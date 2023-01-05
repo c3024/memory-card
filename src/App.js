@@ -16,25 +16,36 @@ function App() {
     ] 
   );
   const [clickedCards, setClickedCards] = useState([]);
-  const handleClick = () => {
+  function handleClick(id)  {
+    console.log(clickedCards);
+    const clickedCard = cards.filter(function (card) {
+        return id === card.id;
+      }
+    );
+    console.log(clickedCard);
+    if (clickedCards.includes(clickedCard[0].name)) {
+      console.log("Game Over!");
+      return;
+    }
     const cardsCopy = cards.slice();
     const shuffledCards = [];
     for (let i = 0; i < cards.length; i++) {
-      console.log(cardsCopy.length);
+      //console.log(cardsCopy.length);
       let index = Math.floor(Math.random()*cardsCopy.length);
-      console.log(index);
+      //console.log(index);
       shuffledCards[i] = cardsCopy[index];
       cardsCopy.splice(index, 1);
-      console.log(cardsCopy.toString());
+      //console.log(cardsCopy.toString());
     }
-    console.log(shuffledCards.toString());
+    //console.log(shuffledCards.toString());
     setCards(shuffledCards);
-    //setClickedCards(...clickedCards, name);
+    //console.log(clickedCard.name);
+    setClickedCards([...clickedCards, clickedCard[0].name]);
   }
   return (
     <ul className="App">
       {cards.map(card => {
-        return <li key={card.id}><Card handleClick={handleClick} name={card.name}/></li>
+        return <li key={card.id}><Card handleClick={handleClick} name={card.name} id={card.id}/></li>
       })}
     </ul>
   );
